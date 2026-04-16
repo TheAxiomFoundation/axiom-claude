@@ -27,16 +27,7 @@ except ImportError:
 # Configuration
 LOCAL_DB = Path.home() / "RulesFoundation" / "autorac" / "transcripts.db"
 SUPABASE_URL = "https://nsupqhfchdtqclomlrgs.supabase.co"
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
-
-# If no env var, try to read from rules.foundation .env.local
-if not SUPABASE_KEY:
-    env_file = Path.home() / "RulesFoundation" / "rules.foundation" / ".env.local"
-    if env_file.exists():
-        for line in env_file.read_text().splitlines():
-            if line.startswith("REACT_APP_SUPABASE_ANON_KEY="):
-                SUPABASE_KEY = line.split("=", 1)[1]
-                break
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 
 
 # ============================================
@@ -133,6 +124,14 @@ CREATE TABLE agent_transcripts (
 CREATE INDEX idx_agent_transcripts_session ON agent_transcripts(session_id);
 CREATE INDEX idx_agent_transcripts_agent ON agent_transcripts(agent_id);
 CREATE INDEX idx_agent_transcripts_type ON agent_transcripts(subagent_type);
+
+ALTER TABLE agent_transcripts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow service access to agent_transcripts"
+ON agent_transcripts
+FOR ALL
+TO service_role
+USING (true)
+WITH CHECK (true);
         """)
 
 
@@ -219,7 +218,7 @@ CREATE INDEX idx_encoding_events_file ON encoding_events(file_path);
 def sync_all():
     """Sync all local data to Supabase."""
     if not SUPABASE_KEY:
-        print("Error: No Supabase key found. Set SUPABASE_SERVICE_KEY or SUPABASE_ANON_KEY")
+        print("Error: No Supabase key found. Set SUPABASE_SERVICE_KEY")
         sys.exit(1)
 
     if not LOCAL_DB.exists():
