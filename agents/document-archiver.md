@@ -42,7 +42,7 @@ atlas/
   us/regulations/cfr/{title}/{part}.xml
 ```
 
-Bucket: `atlas` | Credentials: `~/.config/rulesfoundation/r2-credentials.json`
+Bucket: `atlas` | Credentials: `~/.config/axiom-foundation/r2-credentials.json`
 
 ## Workflow
 

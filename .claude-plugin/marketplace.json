@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "rules-foundation",
+  "name": "axiom",
   "owner": {
-    "name": "Rules Foundation"
+    "name": "The Axiom Foundation"
   },
   "plugins": [
     {
-      "name": "rules-foundation",
+      "name": "axiom",
       "source": "./",
-      "description": "Axiom RuleSpec authoring, source registry guidance, and development tools",
+      "description": "RuleSpec authoring, source registry guidance, and development tools",
       "version": "0.4.0"
     }
   ]

@@ -20,7 +20,7 @@ When given a citation like "26 USC 1":
 
 ```
 Task(
-  subagent_type="rules-foundation:RuleSpec Encoder",
+  subagent_type="axiom:RuleSpec Encoder",
   prompt="Encode {citation} into RuleSpec YAML. Run validation and fix errors before returning.",
   model="opus"
 )
@@ -34,7 +34,7 @@ Run oracles BEFORE LLM reviewers - they're fast/free and provide diagnostic cont
 
 ```
 Task(
-  subagent_type="rules-foundation:Encoding Validator",
+  subagent_type="axiom:Encoding Validator",
   prompt="Validate {citation} against PolicyEngine and TAXSIM. Report: match rates, specific discrepancies, test cases that differ.",
   model="haiku"
 )
@@ -50,10 +50,10 @@ Record the oracle context:
 Spawn ALL four reviewers in a SINGLE message, passing oracle context so they can diagnose WHY discrepancies exist:
 
 ```
-Task(subagent_type="rules-foundation:RuleSpec Reviewer", prompt="Review {citation} encoding. Oracle context: {oracle_discrepancies}", model="haiku")
-Task(subagent_type="rules-foundation:Formula Reviewer", prompt="Review {citation} formulas. Oracle found: {oracle_discrepancies}", model="haiku")
-Task(subagent_type="rules-foundation:Parameter Reviewer", prompt="Review {citation} parameters. Oracle found: {oracle_discrepancies}", model="haiku")
-Task(subagent_type="rules-foundation:Integration Reviewer", prompt="Review {citation} imports/integration. Oracle found: {oracle_discrepancies}", model="haiku")
+Task(subagent_type="axiom:RuleSpec Reviewer", prompt="Review {citation} encoding. Oracle context: {oracle_discrepancies}", model="haiku")
+Task(subagent_type="axiom:Formula Reviewer", prompt="Review {citation} formulas. Oracle found: {oracle_discrepancies}", model="haiku")
+Task(subagent_type="axiom:Parameter Reviewer", prompt="Review {citation} parameters. Oracle found: {oracle_discrepancies}", model="haiku")
+Task(subagent_type="axiom:Integration Reviewer", prompt="Review {citation} imports/integration. Oracle found: {oracle_discrepancies}", model="haiku")
 ```
 
 Collect verdicts from each reviewer. They should investigate the oracle discrepancies and diagnose root causes.

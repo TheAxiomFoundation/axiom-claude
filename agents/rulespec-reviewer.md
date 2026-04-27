@@ -1,6 +1,6 @@
 ---
 name: RuleSpec Reviewer
-description: Reviews RuleSpec encodings for quality, accuracy, and compliance with Rules Foundation guidelines. Use after encoding work to validate rules are correctly translated.
+description: Reviews RuleSpec encodings for quality, accuracy, and compliance with Axiom Foundation guidelines. Use after encoding work to validate rules are correctly translated.
 tools: [Read, Grep, Glob, Bash, WebFetch]
 ---
 
