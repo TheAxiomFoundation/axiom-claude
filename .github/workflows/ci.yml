@@ -11,7 +11,7 @@ jobs:
     name: Validate plugin structure
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
 
       - name: Check required plugin files exist
         run: |
@@ -106,14 +106,14 @@ jobs:
           fi
           echo "All markdown frontmatter valid."
 
-      - name: Check no legacy terms are present
+      - name: Check retired terms are absent
         run: |
-          legacy_ext="r""ac"
+          retired_ext="r""ac"
           source_initials="A""K""N"
           source_name="Ako""ma"
           if find . -path './.git' -prune -o -type f -print \
-            | xargs grep -InE "\\b${legacy_ext}\\b|\\b${legacy_ext^^}\\b|\\.${legacy_ext}\\b|auto${legacy_ext}|${source_name}|\\b${source_initials}\\b|\\.${source_initials,,}\\b"; then
-            echo "::error::Legacy syntax or source-format term found"
+            | xargs grep -InE "\\b${retired_ext}\\b|\\b${retired_ext^^}\\b|\\.${retired_ext}\\b|auto${retired_ext}|${source_name}|\\b${source_initials}\\b|\\.${source_initials,,}\\b"; then
+            echo "::error::Retired syntax or source-format term found"
             exit 1
           fi
-          echo "No legacy terms found."
+          echo "No retired terms found."
